@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bruesk_mardin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"JetBrains Mono",monospace;
+}
+
+body{
+background:#0e0e11;
+color:#e4e4e7;
+overflow-x:hidden;
+}
+
+#dots{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* Layout */
+
+.wrapper{
+max-width:900px;
+margin:140px auto 100px auto;
+padding:0 20px;
+animation:fadeIn 1.2s ease forwards;
+opacity:0;
+}
+
+h1{
+font-size:46px;
+font-weight:600;
+margin-bottom:15px;
+background:linear-gradient(90deg,#ffffff,#a1a1aa);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+color:#9ca3af;
+margin-bottom:80px;
+font-size:14px;
+letter-spacing:.5px;
+}
+
+.card{
+background:rgba(24,24,27,0.75);
+backdrop-filter:blur(8px);
+border:1px solid #2a2a2e;
+border-radius:18px;
+padding:38px;
+margin-bottom:35px;
+transition:.3s ease;
+}
+
+.card:hover{
+transform:translateY(-6px);
+border-color:#3a3a4d;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.card h2{
+font-size:22px;
+margin-bottom:16px;
+color:#ffffff;
+}
+
+.card p{
+line-height:1.75;
+color:#a1a1aa;
+font-size:15px;
+}
+
+.section-title{
+font-size:26px;
+margin-top:70px;
+margin-bottom:8px;
+}
+
+.section-sub{
+color:#6b7280;
+margin-bottom:25px;
+font-size:14px;
+}
+
+button.project-btn{
+width:100%;
+padding:16px;
+background:#1f1f23;
+border:1px solid #333339;
+color:#e4e4e7;
+border-radius:12px;
+cursor:pointer;
+transition:.25s ease;
+font-size:14px;
+letter-spacing:.5px;
+}
+
+button.project-btn:hover{
+background:#27272c;
+border-color:#44444f;
+transform:translateY(-2px);
+}
+
+.footer{
+text-align:center;
+margin-top:120px;
+padding:35px 0;
+font-size:13px;
+color:#6b7280;
+border-top:1px solid #2a2a2e;
+}
+
+@keyframes fadeIn{
+to{opacity:1;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="dots"></canvas>
+
+<div class="wrapper">
+
+<h1>bruesk_mardin</h1>
+
+<div class="subtitle">
+Reverse Engineering · Software Engineering · Backend Development
+</div>
+
+<div class="card">
+<h2>Reverse Engineering</h2>
+<p>
+I enjoy understanding systems from the inside out. Reverse engineering allows me
+to analyze how software behaves at runtime — how memory is structured,
+how execution flows, and how internal components interact beneath the surface.
+</p>
+<p>
+A large part of my focus is game internals, studying engine behavior and
+reconstructing systems directly from compiled binaries.
+</p>
+</div>
+
+<div class="card">
+<h2>Software Engineering</h2>
+<p>
+I primarily work in C++ with a strong focus on performance, structure,
+and long-term maintainability. I care about writing systems that are clear,
+efficient, and thoughtfully designed.
+</p>
+<p>
+Clean architecture and deliberate design choices matter more to me
+than quick or overcomplicated solutions.
+</p>
+</div>
+
+<div class="card">
+<h2>Backend Development</h2>
+<p>
+Alongside low-level work, I build backend systems using JavaScript and Node.js.
+I develop APIs and services that are simple, reliable, and easy to maintain.
+</p>
+<p>
+Whether handling requests, managing data, or designing small internal tools,
+I focus on backend code that remains structured, readable, and scalable.
+</p>
+</div>
+
+<div class="section-title">Public Projects</div>
+<div class="section-sub">
+More projects will be added soon, thanks for checking out my site!
+</div>
+
+<div class="card">
+<button class="project-btn" onclick="goToDetector()">
+Open Site Down Detector
+</button>
+</div>
+
+<footer class="footer">
+© 2026 bruesk_mardin. All rights reserved.
+</footer>
+
+</div>
+
+<script>
+
+/* ===== Dots Background ===== */
+
+const canvasDots=document.getElementById("dots");
+const ctxDots=canvasDots.getContext("2d");
+
+function resizeDots(){
+canvasDots.width=window.innerWidth;
+canvasDots.height=window.innerHeight;
+}
+resizeDots();
+window.addEventListener("resize",resizeDots);
+
+let mouse={x:0,y:0};
+window.addEventListener("mousemove",e=>{
+mouse.x=e.clientX;
+mouse.y=e.clientY;
+});
+
+function drawDots(){
+ctxDots.clearRect(0,0,canvasDots.width,canvasDots.height);
+const spacing=35;
+
+for(let x=0;x<canvasDots.width;x+=spacing){
+for(let y=0;y<canvasDots.height;y+=spacing){
+
+let dx=mouse.x-x;
+let dy=mouse.y-y;
+let dist=Math.sqrt(dx*dx+dy*dy);
+
+let opacity=0.08;
+if(dist<140){
+opacity=0.08+(1-dist/140)*0.6;
+}
+
+ctxDots.fillStyle=`rgba(160,160,170,${opacity})`;
+
+ctxDots.beginPath();
+ctxDots.arc(x,y,2,0,Math.PI*2);
+ctxDots.fill();
+
+}}
+requestAnimationFrame(drawDots);
+}
+drawDots();
+
+/* ===== Redirect ===== */
+
+function goToDetector(){
+window.location.href="https://google.com";
+}
+
+</script>
+
+</body>
+</html>
